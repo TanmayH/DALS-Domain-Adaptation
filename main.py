@@ -2,22 +2,27 @@
 
 import os
 import numpy as np
-import tensorflow as tf
+
+
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior() 
 import DataGen
 import glob
 import architectures
 from sklearn.metrics import f1_score
 from utils import load_image,dice_hard,dice_soft,my_func,resolve_status
+
+
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--logdir', default='network', type=str)
 parser.add_argument('--mu', default=0.2, type=float)
 parser.add_argument('--nu', default=5.0, type=float)
-parser.add_argument('--batch_size', default=1, type=int)
+parser.add_argument('--batch_size', default=10, type=int)
 parser.add_argument('--train_sum_freq', default=150, type=int)
-parser.add_argument('--train_iter', default=150000, type=int)
+parser.add_argument('--train_iter', default=1000, type=int)
 parser.add_argument('--acm_iter_limit', default=300, type=int)
-parser.add_argument('--img_resize', default=512, type=int)
+parser.add_argument('--img_resize', default=64, type=int)
 parser.add_argument('--f_size', default=15, type=int)
 parser.add_argument('--train_status', default=1, type=int)
 parser.add_argument('--narrow_band_width', default=1, type=int)
@@ -210,8 +215,10 @@ def active_contour_layer(elems):
     return phi,init_phi, map_lambda1_acl, map_lambda2_acl
 
 fast_lookup = True
-config = tf.ConfigProto(allow_soft_placement=True)
-input_shape = [args.batch_size, args.img_resize, args.img_resize, 1]
+gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.2)
+config = tf.compat.v1.ConfigProto(allow_soft_placement=True, gpu_options=gpu_options)
+print("Input shape - ", args.img_resize, args.batch_size)
+input_shape = [args.batch_size, args.img_resize, args.img_resize, 3]
 input_shape_dt = [args.batch_size, args.img_resize, args.img_resize]
 iter_limit = args.acm_iter_limit
 narrow_band_width = args.narrow_band_width
@@ -302,6 +309,8 @@ with tf.Session(config=config) as sess:
         label_ext = 'label.npy'
         test_dice = []
         count = 0
+        images = []
+        labels = []
         for fullpath in glob.glob(os.path.join(directory, img_ext)):
             print('Processing Case {} '.format(count+1))
             count+=1
@@ -309,17 +318,25 @@ with tf.Session(config=config) as sess:
             print(filename)
             label_name = filename.split('input')[0] + label_ext
             label_path = fullpath.replace(filename, label_name)
-            image = load_image(fullpath,args.batch_size,False)
-            labels = load_image(label_path, args.batch_size,True)
-            labels[labels != 0] = 1
-            seg_out_acm= sess.run(phi_out,{x: image, y: labels, phase: False})
-            seg_out_acm = seg_out_acm[0, :, :]
-            gt_mask = labels[0, :, :, 0]
-            f2 = f1_score(gt_mask, seg_out_acm, labels=None, average='micro', sample_weight=None)
-            print('Dice is {0:0.4f}'.format(f2))
-            test_dice.append(f2)
-
-        print("Avg Test Dice Score : {0:0.4f}".format(np.average(test_dice)))
+            images += [load_image(fullpath,1,False)]
+            labels += [load_image(label_path,1,True)]
+            labels[-1][labels[-1] != 0] = 1
+        images = np.stack(images)
+        labels = np.stack(labels)
+        images = images[:, 0, :, :]
+        labels = labels[:, 0, :, :]
+        tot = 0
+        denom = 0
+        for i in range(0, 160, 10):
+            print("Processing - ", i, " - ", i + 10)
+            ip = images[i:i + 10]
+            lab = labels[i:i + 10]
+            mask = sess.run(phi_out,{x: ip, y: lab, phase: False})
+            denom += mask.shape[0]
+            for j in range(mask.shape[0]):
+                tot += np.sum(mask[lab==1])*2.0 / (np.sum(mask) + np.sum(lab))
+            
+        print('Dice is {0:0.4f}'.format(tot/denom))
 
 
 

@@ -35,12 +35,13 @@ def load_image(path, batch_size,label=False):
     else:
         image = (image - np.min(image)) * (255.0 / (np.max(image) - np.min(image)))
     image = np.asarray([image] * batch_size)
-    image = image[:, :, :, np.newaxis]
-
+    # import pdb; pdb.set_trace()
     return image
 
 
 def resolve_status(train_status):
+    restore = None
+    is_training = None
     if train_status == 1:
         restore = False
         is_training = True

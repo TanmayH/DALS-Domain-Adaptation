@@ -266,7 +266,7 @@ with tf.Session(config=config) as sess:
     plt.title('Radiologist Annotation')
     gt_mask = contoured_image(gt_mask, image[0, :, :, 0])
     plt.imshow(gt_mask)
-    plt.show()
+    plt.savefig("op.png")
 
 
 
