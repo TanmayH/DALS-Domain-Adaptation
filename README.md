@@ -80,8 +80,8 @@ train/
 
 <img src="./Images/DALS_outputs.png" width="95%">
 
-#Domain Adaptation Techniques
-#Deep CORAL
+# Domain Adaptation Techniques
+# Deep CORAL
 To use visual domain adaptation using statistic criterion, specifically Deep Correlation Alignment, you need to run:
 
 ```
