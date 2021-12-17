@@ -76,7 +76,7 @@ train/
 ```
 
 
-# Segmentation comparison of DALS with Expert Radiologist and U-Net 
+# (Without Domain Adaptation) Segmentation comparison of DALS with Expert Radiologist and U-Net 
 
 <img src="./Images/DALS_outputs.png" width="95%">
 
