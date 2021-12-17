@@ -89,3 +89,11 @@ python main_deep_coral.py
 ```
 Deep CORAL Paper: [Link](https://link.springer.com/chapter/10.1007/978-3-319-49409-8_35) <br/>
 CORAL Paper: [Link](https://dl.acm.org/doi/10.5555/3016100.3016186) <br/>
+
+# Reconstruction based Domain Adaptation
+To use Reconstruction based Domain Adaptation, you need to run:
+
+```
+python main_reconstruction.py 
+```
+
