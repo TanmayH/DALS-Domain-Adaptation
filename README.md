@@ -1,7 +1,6 @@
-# Deep Active Lesion Segmentation
+# Visual Domain Adaptation Techniques in Deep Active Lesion Segmentation
 
-
-Official repositoy for Deep Active Lesion Segmentaion ( DALS ). 
+Here, we experiment with a variety of domain adaptation techniques to augment the accuracy of CNN backbone and improve upon the segmentation results while keeping the Level Set Active Contour Part intact.    
 
 DALS offers a fast levelset active contour model, implemented entirely in Tensorflow, that can be paired with any CNN backbone for image segmentation. 
 
@@ -25,19 +24,6 @@ Using a NVIDIA TitanXP GPU, the entire demo runs for approximately 3 seconds.
 Official Paper: [Link](https://link.springer.com/chapter/10.1007/978-3-030-32692-0_12) <br/>
 
 ArXiv Paper: [Link](https://arxiv.org/pdf/1908.06933.pdf) <br/>
-
-If you use the DALS framework, its fast Tensorflow-based levelset active contours or its CNN backbone ( Dilated Dense U-Net ), please cite our paper:  
-
-```
-@inproceedings{hatamizadeh2019deep,
-  title={Deep active lesion segmentation},
-  author={Hatamizadeh, Ali and Hoogi, Assaf and Sengupta, Debleena and Lu, Wuyue and Wilcox, Brian and Rubin, Daniel and Terzopoulos, Demetri},
-  booktitle={International Workshop on Machine Learning in Medical Imaging},
-  pages={98--105},
-  year={2019},
-  organization={Springer}
-}
-```
 
 # Environment Setup
 
@@ -94,6 +80,10 @@ train/
 
 <img src="./Images/DALS_outputs.png" width="95%">
 
+#Domain Adaptation Techniques
+#Deep CORAL
+To use visual domain adaptation using statistic criterion, specifically Deep Correlation Alignment, you need to run:
 
-
-
+```
+python main_deep_coral.py 
+```
