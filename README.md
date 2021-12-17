@@ -82,7 +82,7 @@ train/
 
 # Domain Adaptation Techniques
 # Deep CORAL
-To use visual domain adaptation using statistic criterion, specifically Deep Correlation Alignment, you need to run:
+To use visual domain adaptation using statistic criterion in DALS, specifically Deep Correlation Alignment, you need to run:
 
 ```
 python main_deep_coral.py 
