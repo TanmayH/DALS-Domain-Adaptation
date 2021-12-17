@@ -97,3 +97,11 @@ To use Reconstruction based Domain Adaptation, you need to run:
 python main_reconstruction.py 
 ```
 DRCN Paper: [Link](https://arxiv.org/pdf/1607.03516.pdf) <br/>
+
+# FDA
+To use the Fourier Domain Adaptation Model, you need to run:
+
+```
+python main_fda.py 
+```
+FDA Paper: [Link](https://arxiv.org/pdf/2004.05498.pdf) <br/>
