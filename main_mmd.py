@@ -253,7 +253,7 @@ def gaussian_kernel(x, y, beta):
     return tf.exp( -beta * tf.reduce_sum(tf.square(r - y), axis=-1))
     # return tf.reduce_sum(tf.exp( -beta * tf.square(pair_diff)), axis=-1)
 
-def Joint_MMD(x1, x2, beta=0.1):
+def MMD(x1, x2, beta=0.1):
     """
     maximum mean discrepancy (MMD) based on Gaussian kernel
     function for keras models (theano or tensorflow backend)
@@ -269,7 +269,7 @@ def Joint_MMD(x1, x2, beta=0.1):
     diff = tf.reduce_mean(x1x1) - 2 * tf.reduce_mean(x1x2) + tf.reduce_mean(x2x2)
     return diff
 
-mmd_score = Joint_MMD(out_seg, out_seg_target)
+mmd_score = MMD(out_seg, out_seg_target)
 
 Dice = dice_soft(out_seg, y)
 seg_loss = 1 - Dice
