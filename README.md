@@ -87,3 +87,5 @@ To use visual domain adaptation using statistic criterion, specifically Deep Cor
 ```
 python main_deep_coral.py 
 ```
+Deep CORAL Paper: [Link](https://link.springer.com/chapter/10.1007/978-3-319-49409-8_35) <br/>
+CORAL Paper: [Link](https://dl.acm.org/doi/10.5555/3016100.3016186) <br/>
