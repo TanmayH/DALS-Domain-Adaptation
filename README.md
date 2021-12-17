@@ -105,3 +105,23 @@ To use the Fourier Domain Adaptation Model, you need to run:
 python main_fda.py 
 ```
 FDA Paper: [Link](https://arxiv.org/pdf/2004.05498.pdf) <br/>
+
+# MMD
+To use the MMD Domain Adaptation Model, you need to run:
+
+```
+python main_mmd.py 
+```
+MMD Paper: [Link](https://arxiv.org/abs/1602.04433) <br/>
+
+# JMMD
+To use the JMMD Domain Adaptation Model, you need to run:
+
+```
+python main_jmmd.py 
+```
+MMD Paper: [Link](https://arxiv.org/pdf/1605.06636.pdf) <br/>
+
+
+
+
